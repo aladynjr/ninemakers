@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, forwardRef } from 'react'
 import {
     ref,
     uploadBytes,
@@ -18,6 +18,11 @@ import {
 
 } from "firebase/firestore";
 import GetTags from '../utilities/GetTags'
+import { AiFillTags } from 'react-icons/ai'
+import { LoadingButton } from '@mui/lab'
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+
 
 
 function AdminPage() {
@@ -33,9 +38,11 @@ function AdminPage() {
 
 
     //generate a random four chars number
-
+    const [loading, setLoading] = useState(false);
 
     const uploadFile = () => {
+        setLoading(true);
+
         if (imageUpload == null) return;
         const imageRef = ref(storage, `images/${imageUpload.name + RandomNumber()}`);
         uploadBytes(imageRef, imageUpload)
@@ -44,8 +51,18 @@ function AdminPage() {
                     .then((url) => {
                         setImageUrl(url);
                         createQuestion(url);
-                    });
-            });
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                        setLoading(false);
+
+                        setAlertMessage('Error uploading image');
+                        setAlertSeverity('error');
+                        setOpenAlert(true);
+                    }
+                    );
+            })
+
     };
 
     //tag color 
@@ -71,6 +88,12 @@ function AdminPage() {
             tagUrl: imageUrl
         });
         console.log('%c TAG ADDED', 'color: green; font-weight: bold;')
+
+        setAlertMessage('Tag Added Successfully ');
+        setAlertSeverity('success');
+        setOpenAlert(true);
+
+        setLoading(false);
     };
 
     //get tags 
@@ -89,15 +112,34 @@ function AdminPage() {
         if (!color) return
         setEditTagColor(color?.hex);
     };
-    return (
-        <div style={{ paddingTop: '50px', paddingBottom:'100px' }} >
 
-            <div className="flex justify-center flex-col flex-wrap items-center" style={{maxWidth:'900px', margin:'auto'}} >
+    //alert 
+    const Alert = forwardRef(function Alert(props, ref) {
+        return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+    });
+
+    const [openAlert, setOpenAlert] = useState(false);
+    const [alertSeverity, setAlertSeverity] = useState('success');
+
+const [alertMessage, setAlertMessage] = useState('')
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpenAlert(false);
+    };
+
+    return (
+        <div style={{ paddingTop: '50px', paddingBottom: '100px' }} >
+
+            <div className="flex justify-center flex-col flex-wrap items-stretch" style={{ maxWidth: '900px', margin: 'auto' }} >
 
                 <h1 className='text-2xl w-[90%] max-w-2xl text-left mb-8 ml-6 ' >Create a Tag</h1>
                 <div className='flex flex-wrap' >
                     <div className='m-auto' >
-                        <div className="mb-6  w-[90%] max-w-sm" style={{ margin:'20px auto'}}>
+                        <div className="mb-6  w-[90%] max-w-sm" style={{ margin: '20px auto' }}>
                             <p htmlFor="exampleFormControlInput1"
                                 className="form-label inline-block mb-2 text-gray-700 text-left w-full "
                             >Tag Name</p>
@@ -109,11 +151,11 @@ function AdminPage() {
                         </div>
 
 
-                        <div className="mb-6 w-[90%] max-w-sm" style={{ margin:'20px auto'}}>
+                        <div className="mb-6 w-[90%] max-w-sm" style={{ margin: '20px auto' }}>
                             <label htmlFor="formFile" className="form-label inline-block mb-2 text-gray-700 w-full text-left">
                                 Upload Tag Image</label>
                             <input
-                                onClick={() => { uploadFile() }}
+                                // onClick={() => { uploadFile() }}
                                 onChange={(event) => {
                                     setImageUpload(event.target.files[0]);
                                 }}
@@ -122,9 +164,9 @@ function AdminPage() {
                     </div>
 
 
-                    <div className='m-auto ' style={{marginBottom:'-56px'}} >
+                    <div className='m-auto ' style={{ marginBottom: '-56px' }} >
 
-                        <div className='px-6  max-w-sm flex items-center w-full ' style={{ maxWidth: '240px', margin:'20px auto' }} >
+                        <div className='px-6  max-w-sm flex items-center w-full ' style={{ maxWidth: '240px', margin: '20px auto' }} >
                             <img style={{ width: '50px', margin: 'auto', borderRadius: '100%', backgroundColor: tagColor, padding: '2px' }} src={imageUpload ? URL.createObjectURL(imageUpload) : 'https://media.istockphoto.com/vectors/thumbnail-image-vector-graphic-vector-id1147544807?k=20&m=1147544807&s=612x612&w=0&h=pBhz1dkwsCMq37Udtp9sfxbjaMl27JUapoyYpQm0anc='} />
                             <div className='w-[90%] max-w-sm text-white text-sm rounded-3xl py-1 px-3  ' style={{ backgroundColor: tagColor, width: tagName ? 'fit-content' : '100px', minWidth: '80px', minHeight: '28px' }} >{tagName}</div>
                         </div>
@@ -142,15 +184,30 @@ function AdminPage() {
                 </div>
             </div>
 
+            <LoadingButton
+                loading={loading} variant='contained' color='success' endIcon={<AiFillTags />}
+                disableRipple={true}
+                style={{ marginTop: '66px' }}
+                onClick={() => { uploadFile() }}
 
-            <button
+            > Create Tag</LoadingButton>
+
+            <Snackbar open={openAlert} autoHideDuration={6000} onClose={handleClose}>
+                <Alert onClose={handleClose} severity={alertSeverity} sx={{ width: '100%' }}>
+                    {alertMessage}
+                </Alert>
+            </Snackbar>
+     
+
+            {/* <button
                 onClick={() => { uploadFile() }}
                 type="button"
                 data-mdb-ripple="true"
                 style={{marginTop:'66px'}}
                 data-mdb-ripple-color="light"
                 className="inline-block px-6 py-2.5 bg-green-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
-            >Create Tag</button>
+            >Create Tag</button> */}
+
 
 
             {/* {tags && <div>
