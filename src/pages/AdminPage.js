@@ -41,6 +41,16 @@ function AdminPage() {
     const [loading, setLoading] = useState(false);
 
     const uploadFile = () => {
+        //check if all fields are filled
+        if (!imageUpload || !tagName || !tagColor) {
+            setAlertMessage('Please fill all fields')
+            setAlertSeverity('error')
+            setOpenAlert(true)
+
+            return
+        }
+
+
         setLoading(true);
 
         if (imageUpload == null) return;
@@ -121,7 +131,7 @@ function AdminPage() {
     const [openAlert, setOpenAlert] = useState(false);
     const [alertSeverity, setAlertSeverity] = useState('success');
 
-const [alertMessage, setAlertMessage] = useState('')
+    const [alertMessage, setAlertMessage] = useState('')
 
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
@@ -130,6 +140,9 @@ const [alertMessage, setAlertMessage] = useState('')
 
         setOpenAlert(false);
     };
+
+    //form validation
+    const [formError, setFormError] = useState('');
 
     return (
         <div style={{ paddingTop: '50px', paddingBottom: '100px' }} >
@@ -197,7 +210,7 @@ const [alertMessage, setAlertMessage] = useState('')
                     {alertMessage}
                 </Alert>
             </Snackbar>
-     
+
 
             {/* <button
                 onClick={() => { uploadFile() }}

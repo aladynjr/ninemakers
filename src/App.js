@@ -25,10 +25,10 @@ function App() {
 
               <Routes>
       
-                <Route exact path="/" element={<MiniPostsPage />} />
+                <Route exact path="/" element={<AdminPage />} />
+                <Route exact path="/mini" element={<MiniPostsPage />} />
                 <Route exact path="/posts" element={<PostsPage />} />
                 <Route exact path="/create" element={<CreatePostPage />} />
-                <Route exact path="/admin" element={<AdminPage />} />
 
               </Routes>
 

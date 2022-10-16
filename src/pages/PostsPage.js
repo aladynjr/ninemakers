@@ -6,42 +6,19 @@ import GetPosts from '../utilities/GetPosts';
 
 function PostsPage() {
     //get tags 
-    const [tags, setTags] = useState([
-        {
-        tagName: 'productivity',
-        tagColor: 'limegreen'
-    },
-    {
-        tagName: 'health',
-        tagColor: 'red'
-    }
-]);
+    const [tags, setTags] = useState([]);
 
 
     //get posts from firebase 
-    const [posts, setPosts] = useState([
-        {
-            postTitle: 'What is Productivity?',
-            postContent: `Let's define productivity. Productivity is a measure of efficiency of a person completing a task. We often assume that productivity means getting more things done each day. Wrong. Productivity is getting important things done consistently. And no matter what you are working on, there are only a few things that are truly important. Being productive is about maintaining a steady, average speed on a few things, not maximum speed on everything.`,
-            postTag: `productivity`
-        },
-        {
-            postTitle: 'What is Health?',
-            postContent: `Are you really Healthy? Health is a measure of efficiency of a person completing a task. We often assume that productivity means getting more things done each day. Wrong. Productivity is getting important things done consistently. And no matter what you are working on, there are only a few things that are truly important. Being productive is about maintaining a steady, average speed on a few things, not maximum speed on everything.`,
-            postTag: `health`
-        }
-    ]);
+    const [posts, setPosts] = useState([]);
 
 
-    // useEffect(() => {
-    //     GetTags(setTags);
-    //     GetPosts(setPosts);
-    // }, [])
+     useEffect(() => {
+         GetTags(setTags);
+         GetPosts(setPosts);
+     }, [])
     console.log({ posts })
     console.log({ tags })
-
-
-
 
     return (
         <div>
@@ -60,10 +37,8 @@ function PostsPage() {
                                                     <b style={{ backgroundColor: (tag.tagColor), color: 'white' }} >{tag.tagName}</b>
                                                 </div>}
                                         </div>
-                                    )
-
-                                })}
-                                <p className="text-gray-700 text-left mb-4">
+                                    )})}
+                                <p className="text-gray-700 text-left mb-4" style={{whiteSpace: 'pre-line'}}>
                                     {post.postContent}
                                 </p>
                             </div>
