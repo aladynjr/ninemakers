@@ -1,0 +1,14 @@
+
+
+.App {
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+
+}
+
+#root > div > div > div > div.flex.justify-center.flex-col.flex-wrap > div > div:nth-child(2) > div.mb-12.mt-6 > div > div:nth-child(1){
+    right : 78px!important;
+}
+#root > div > div > div > div.flex.justify-center.flex-col.flex-wrap > div > div:nth-child(2) > div.mb-12.mt-6 > div > div:nth-child(2){
+    right : 78px!important;
+}
