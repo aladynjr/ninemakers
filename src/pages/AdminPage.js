@@ -180,7 +180,7 @@ function AdminPage() {
                     <div className='m-auto ' style={{ marginBottom: '-56px' }} >
 
                         <div className='px-6  max-w-sm flex items-center w-full ' style={{ maxWidth: '240px', margin: '20px auto' }} >
-                            <img style={{ width: '50px', margin: 'auto', borderRadius: '100%', backgroundColor: tagColor, padding: '2px' }} src={imageUpload ? URL.createObjectURL(imageUpload) : 'https://media.istockphoto.com/vectors/thumbnail-image-vector-graphic-vector-id1147544807?k=20&m=1147544807&s=612x612&w=0&h=pBhz1dkwsCMq37Udtp9sfxbjaMl27JUapoyYpQm0anc='} />
+                            <img style={{ width: '50px',height:'50px', margin: 'auto',/* borderRadius: '100%', */ objectFit:'cover'/*, backgroundColor: tagColor, padding: '2px'*/ }} src={imageUpload ? URL.createObjectURL(imageUpload) : 'https://media.istockphoto.com/vectors/thumbnail-image-vector-graphic-vector-id1147544807?k=20&m=1147544807&s=612x612&w=0&h=pBhz1dkwsCMq37Udtp9sfxbjaMl27JUapoyYpQm0anc='} />
                             <div className='w-[90%] max-w-sm text-white text-sm rounded-3xl py-1 px-3  ' style={{ backgroundColor: tagColor, width: tagName ? 'fit-content' : '100px', minWidth: '80px', minHeight: '28px' }} >{tagName}</div>
                         </div>
 
