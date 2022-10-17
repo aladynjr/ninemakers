@@ -89,7 +89,7 @@ function CreatePostPage() {
         }, [openAlert])
 
     return (
-        <div style={{ paddingTop: '50px', paddingBottom: '200px' }}>
+        <div style={{ paddingTop: '50px', paddingBottom: '200px' }} className='animate__animated animate__fadeInDown'>
             {loading && <div id='alertMessage' className=' fade-in w-full h-screen fixed backdrop-blur-xl bg-black/50 z-50 -mt-12  ' >
                 <div class="lds-dual-ring" style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', opacity: '0.7' }} ></div>
             </div>}
@@ -186,7 +186,7 @@ function CreatePostPage() {
                             data-mdb-ripple="true"
                             data-mdb-ripple-color="light"
 
-                            className="inline-block px-6 py-2.5 bg-green-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-green-700 hover:shadow-lg focus:bg-green-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-800 active:shadow-lg transition duration-150 ease-in-out"
+                            className="inline-block px-6 py-2.5 bg-green-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-green-700 hover:shadow-lg focus:bg-green-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-800 active:shadow-lg transition duration-150 ease-in-out animate__animated animate__fadeInDown animate__delay-1s"
                         >Create Post</button>
                     </div>
 

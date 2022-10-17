@@ -157,7 +157,7 @@ function AdminPage() {
     const [formError, setFormError] = useState('');
 
     return (
-        <div style={{ paddingTop: '50px', paddingBottom: '100px' }} >
+        <div style={{ paddingTop: '50px', paddingBottom: '100px' }} className='animate__animated animate__fadeInDown' >
             {loading && <div id='alertMessage' className=' fade-in w-full h-screen fixed backdrop-blur-xl bg-black/50 z-50 -mt-12  ' >
                 <div class="lds-dual-ring" style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', opacity: '0.7' }} ></div>
             </div>}
@@ -213,10 +213,10 @@ function AdminPage() {
 
 
             <button type="button"
-                style={{ marginTop: '66px' }}
+                style={{ marginTop: '66px', marginBottom:'200px' }}
                 onClick={() => { uploadFile() }}
 
-                class="inline-block px-7 py-3 bg-green-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-green-700 hover:shadow-lg  focus:shadow-lg focus:outline-none focus:ring-0  focus:shadow-lg transition duration-150 ease-in-out">
+                class="inline-block px-7 py-3 bg-green-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-green-700 hover:shadow-lg  focus:shadow-lg focus:outline-none focus:ring-0  focus:shadow-lg transition duration-150 ease-in-out animate__animated animate__fadeInDown animate__delay-1s">
                 Create Tag
             </button>
 
