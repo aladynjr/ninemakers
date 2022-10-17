@@ -2,6 +2,7 @@ import React, { Suspense } from 'react'
 import './App.scss';
 import lazy from "react-lazy-with-preload";
 import 'tw-elements';
+import 'animate.css';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 

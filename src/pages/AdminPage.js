@@ -124,9 +124,7 @@ function AdminPage() {
     };
 
     //alert 
-    const Alert = forwardRef(function Alert(props, ref) {
-        return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-    });
+
 
     const [openAlert, setOpenAlert] = useState(false);
     const [alertSeverity, setAlertSeverity] = useState('success');
@@ -141,12 +139,28 @@ function AdminPage() {
         setOpenAlert(false);
     };
 
+    useEffect(() => {
+        if (!openAlert) return
+        //set open alert to false after 5 seconds 
+        setTimeout(() => {
+            document.getElementById('alertMessage').classList.add('fade-out')
+        }, 5000)
+        setTimeout(() => {
+            setOpenAlert(false)
+            document.getElementById('alertMessage').classList.remove('fade-out')
+
+        }, 6500)
+
+    }, [openAlert])
+
     //form validation
     const [formError, setFormError] = useState('');
 
     return (
         <div style={{ paddingTop: '50px', paddingBottom: '100px' }} >
-
+            {loading && <div id='alertMessage' className=' fade-in w-full h-screen fixed backdrop-blur-xl bg-black/50 z-50 -mt-12  ' >
+                <div class="lds-dual-ring" style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', opacity: '0.7' }} ></div>
+            </div>}
             <div className="flex justify-center flex-col flex-wrap items-stretch" style={{ maxWidth: '900px', margin: 'auto' }} >
 
                 <h1 className='text-2xl w-[90%] max-w-2xl text-left mb-8 ml-6 ' >Create a Tag</h1>
@@ -180,7 +194,7 @@ function AdminPage() {
                     <div className='m-auto ' style={{ marginBottom: '-56px' }} >
 
                         <div className='px-6  max-w-sm flex items-center w-full ' style={{ maxWidth: '240px', margin: '20px auto' }} >
-                            <img style={{ width: '50px',height:'50px', margin: 'auto',/* borderRadius: '100%', */ objectFit:'cover'/*, backgroundColor: tagColor, padding: '2px'*/ }} src={imageUpload ? URL.createObjectURL(imageUpload) : 'https://media.istockphoto.com/vectors/thumbnail-image-vector-graphic-vector-id1147544807?k=20&m=1147544807&s=612x612&w=0&h=pBhz1dkwsCMq37Udtp9sfxbjaMl27JUapoyYpQm0anc='} />
+                            <img style={{ width: '50px', height: '50px', margin: 'auto',/* borderRadius: '100%', */ objectFit: 'cover'/*, backgroundColor: tagColor, padding: '2px'*/ }} src={imageUpload ? URL.createObjectURL(imageUpload) : 'https://media.istockphoto.com/vectors/thumbnail-image-vector-graphic-vector-id1147544807?k=20&m=1147544807&s=612x612&w=0&h=pBhz1dkwsCMq37Udtp9sfxbjaMl27JUapoyYpQm0anc='} />
                             <div className='w-[90%] max-w-sm text-white text-sm rounded-3xl py-1 px-3  ' style={{ backgroundColor: tagColor, width: tagName ? 'fit-content' : '100px', minWidth: '80px', minHeight: '28px' }} >{tagName}</div>
                         </div>
 
@@ -197,20 +211,46 @@ function AdminPage() {
                 </div>
             </div>
 
-            <LoadingButton
-                loading={loading} variant='contained' color='success' endIcon={<AiFillTags />}
-                disableRipple={true}
+
+            <button type="button"
                 style={{ marginTop: '66px' }}
                 onClick={() => { uploadFile() }}
 
-            > Create Tag</LoadingButton>
+                class="inline-block px-7 py-3 bg-green-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-green-700 hover:shadow-lg  focus:shadow-lg focus:outline-none focus:ring-0  focus:shadow-lg transition duration-150 ease-in-out">
+                Create Tag
+            </button>
 
-            <Snackbar open={openAlert} autoHideDuration={6000} onClose={handleClose}>
+
+            {/* <LoadingButton
+                        loading={loading} variant='contained' color='success' endIcon={<AiFillTags />}
+                        disableRipple={true}
+                        style={{ marginTop: '66px' }}
+                        onClick={() => { uploadFile() }}
+        
+                    > Create Tag</LoadingButton> */}
+
+            {/* <Snackbar open={openAlert} autoHideDuration={6000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity={alertSeverity} sx={{ width: '100%' }}>
                     {alertMessage}
                 </Alert>
-            </Snackbar>
+            </Snackbar> */}
 
+            {openAlert && <div id='alertMessage'>
+                {alertSeverity == 'success' && <div style={{ position: 'fixed', bottom: '10px', left: '50%', transform: 'translate(-50%, -50%)' }} class="fade-in  bg-green-100 rounded-lg py-5 px-6 mb-3 text-base text-green-700 inline-flex items-center w-4/5 " role="alert">
+                    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="check-circle" class="w-4 h-4 mr-2 fill-current" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                        <path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"></path>
+                    </svg>
+                    {alertMessage}
+                </div>}
+
+                {alertSeverity == 'error' && <div style={{ position: 'fixed', bottom: '10px', left: '50%', transform: 'translate(-50%, -50%)' }} class="fade-in  bg-red-100 rounded-lg py-5 px-6 mb-3 text-base text-red-700 inline-flex items-center w-4/5 " role="alert">
+                    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="exclamation-circle" class="w-4 h-4 mr-2 fill-current" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                        <path fill="currentColor" d="M256 8C119.033 8 8 119.033 8 256s111.033 248 248 248 248-111.033 248-248S392.967 8 256 8zm0 464c-110.28 0-200-89.72-200-200S145.72 56 256 56s200 89.72 200 200-89.72 200-200 200zm24-304h-48c-6.627 0-12 5.373-12 12v144c0 6.627 5.373 12 12 12h48c6.627 0 12-5.373 12-12V192c0-6.627-5.373-12-12-12zm0 192h-48v-48h48v48z"></path>
+                    </svg>
+                    {alertMessage}
+
+                </div>}
+            </div>}
 
             {/* <button
                 onClick={() => { uploadFile() }}
@@ -223,7 +263,7 @@ function AdminPage() {
 
 
 
-            {/* {tags && <div>
+             {tags && <div>
                 {tags.map((tag, i) => {
                     return (
                         <div key={i}>
@@ -237,10 +277,19 @@ function AdminPage() {
                             }} type="button" class="px-6 py-2.5 bg-orange-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                 Launch Edit modal
                             </button>
+                            <button onClick={() => {
+                                 const Doc = doc(db, "tags", tag.id);
+                                 deleteDoc(Doc);
+                                 tags.filter((item) => item.tagName !== tag.tagName)
+
+                            }} type="button" class="px-6 py-2.5 bg-red-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
+                                Delete
+                            </button>
+
                         </div>
                     )
                 })}
-            </div>} */}
+            </div>} 
 
 
 

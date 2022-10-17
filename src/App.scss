@@ -12,3 +12,67 @@
 #root > div > div > div > div.flex.justify-center.flex-col.flex-wrap > div > div:nth-child(2) > div.mb-12.mt-6 > div > div:nth-child(2){
     right : 78px!important;
 }
+
+//fade in animation 
+.fade-in {
+  animation: fadeIn ease 0.5s;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+//fade out after 5 seconds 
+.fade-out {
+  animation: fadeOut ease 0.7s;
+ // animation-delay: 4s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity:1;
+  }
+  100% {
+    opacity:0;
+  }
+}
+
+
+.lds-dual-ring {
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+}
+.lds-dual-ring:after {
+  content: " ";
+  display: block;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border-radius: 50%;
+  border: 6px solid #fff;
+  border-color: #fff transparent #fff transparent;
+  animation: lds-dual-ring 1.2s linear infinite;
+}
+@keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@media(max-width:1024px){
+  .ChooseTagAndButtonResponsiveness{
+  flex-direction: column!important;
+  } 
+  .ChooseTagResponsiv{
+    margin-bottom: 50px;
+  }
+}
