@@ -144,12 +144,12 @@ function AdminPage() {
         //set open alert to false after 5 seconds 
         setTimeout(() => {
             document.getElementById('alertMessage').classList.add('fade-out')
-        }, 5000)
+        }, 1000)
         setTimeout(() => {
             setOpenAlert(false)
             document.getElementById('alertMessage').classList.remove('fade-out')
 
-        }, 6500)
+        }, 2500)
 
     }, [openAlert])
 
@@ -158,8 +158,8 @@ function AdminPage() {
 
     return (
         <div style={{ paddingTop: '50px', paddingBottom: '100px' }} className='animate__animated animate__fadeInDown' >
-            {loading && <div id='alertMessage' className=' fade-in w-full h-screen fixed backdrop-blur-xl bg-black/50 z-50 -mt-12  ' >
-                <div class="lds-dual-ring" style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', opacity: '0.7' }} ></div>
+            {loading && <div id='alertMessage' style={{height:'100%'}} className=' fade-in w-full h-screen fixed backdrop-blur-xl bg-black/50 z-50 -mt-12  ' >
+                <div class="lds-dual-ring" style={{ position: 'sticky', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', opacity: '0.7' }} ></div>
             </div>}
             <div className="flex justify-center flex-col flex-wrap items-stretch" style={{ maxWidth: '900px', margin: 'auto' }} >
 
@@ -236,14 +236,14 @@ function AdminPage() {
             </Snackbar> */}
 
             {openAlert && <div id='alertMessage'>
-                {alertSeverity == 'success' && <div style={{ position: 'fixed', bottom: '10px', left: '50%', transform: 'translate(-50%, -50%)' }} class="fade-in  bg-green-100 rounded-lg py-5 px-6 mb-3 text-base text-green-700 inline-flex items-center w-4/5 " role="alert">
+                {alertSeverity == 'success' && <div style={{ position: 'fixed', top: '30%', left: '50%', transform: 'translate(-50%, -50%)' }} class="fade-in  bg-green-100 rounded-lg py-5 px-6 mb-3 text-base text-green-700 inline-flex items-center w-4/5 " role="alert">
                     <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="check-circle" class="w-4 h-4 mr-2 fill-current" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                         <path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"></path>
                     </svg>
                     {alertMessage}
                 </div>}
 
-                {alertSeverity == 'error' && <div style={{ position: 'fixed', bottom: '10px', left: '50%', transform: 'translate(-50%, -50%)' }} class="fade-in  bg-red-100 rounded-lg py-5 px-6 mb-3 text-base text-red-700 inline-flex items-center w-4/5 " role="alert">
+                {alertSeverity == 'error' && <div style={{ position: 'fixed', top: '30%', left: '50%', transform: 'translate(-50%, -50%)' }} class="fade-in  bg-red-100 rounded-lg py-5 px-6 mb-3 text-base text-red-700 inline-flex items-center w-4/5 " role="alert">
                     <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="exclamation-circle" class="w-4 h-4 mr-2 fill-current" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                         <path fill="currentColor" d="M256 8C119.033 8 8 119.033 8 256s111.033 248 248 248 248-111.033 248-248S392.967 8 256 8zm0 464c-110.28 0-200-89.72-200-200S145.72 56 256 56s200 89.72 200 200-89.72 200-200 200zm24-304h-48c-6.627 0-12 5.373-12 12v144c0 6.627 5.373 12 12 12h48c6.627 0 12-5.373 12-12V192c0-6.627-5.373-12-12-12zm0 192h-48v-48h48v48z"></path>
                     </svg>

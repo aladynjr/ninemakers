@@ -76,3 +76,22 @@
     margin-bottom: 50px;
   }
 }
+
+
+@media (max-width: 1014px){
+
+  .HideOnMobile{
+    display: none;
+  }
+}
+
+@media (min-width: 1024px){
+  .HideOnDesktop{
+    display: none;
+  }
+}
+
+.ProgressiveOpacity {
+  //  mask-image: -webkit-gradient(linear, left top, left bottom, 
+  //  from(rgb(0, 0, 0)), to(rgba(0,0,0,0)));
+}
