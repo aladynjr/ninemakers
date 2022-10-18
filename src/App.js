@@ -10,7 +10,7 @@ const AdminPage = lazy(() => import('./pages/AdminPage'));
 const CreatePostPage = lazy(() => import('./pages/CreatePostPage'));
 const PostsPage = lazy(() => import('./pages/PostsPage'));
 const MiniPostsPage =  lazy(() => import('./pages/MiniPostsPage'));
-
+const SinglePostPage = lazy(() => import('./pages/SinglePostPage'));
 
 function App() {
   return (
@@ -26,9 +26,12 @@ function App() {
 
               <Routes>
       
-                <Route exact path="/" element={<AdminPage />} />
-                <Route exact path="/mini" element={<MiniPostsPage />} />
+                <Route exact path="/" element={<PostsPage />} />
                 <Route exact path="/posts" element={<PostsPage />} />
+                <Route exact path="/admin" element={<AdminPage />} />
+                <Route exact path="/mini" element={<MiniPostsPage />} />
+                <Route exact path="/post/:id" element={<SinglePostPage />} />
+
                 <Route exact path="/create" element={<CreatePostPage />} />
 
               </Routes>

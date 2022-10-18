@@ -3,7 +3,7 @@ import { db } from "../firebase-config";
 import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc, onSnapshot, query, orderBy, where, serverTimestamp } from "firebase/firestore";
 import GetTags from '../utilities/GetTags';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
-
+import {Helmet} from "react-helmet";
 function CreatePostPage() {
 
 function Random10CharsCode(){
@@ -100,6 +100,11 @@ function Random10CharsCode(){
 
     return (
         <div style={{ paddingTop: '50px', paddingBottom: '200px' }} className='animate__animated animate__fadeInDown'>
+            <Helmet>
+                <meta charSet="utf-8" />
+                <title>99Makers - Create Post </title>
+                <link rel="canonical" href={"/create"} />
+            </Helmet>
             {(loading) && <div id='alertMessage' style={{height:'100%'}} className=' fade-in w-full h-screen fixed backdrop-blur-xl bg-black/50 z-50 -mt-12  ' >
                 <div class="lds-dual-ring" style={{ position: 'sticky', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', opacity: '0.7' }} ></div>
             </div>}

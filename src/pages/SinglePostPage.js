@@ -1,45 +1,58 @@
-import React, { useEffect, useState, useReducer } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useParams } from "react-router-dom";
 import { db } from "../firebase-config";
 import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc, onSnapshot, query, orderBy, where, serverTimestamp } from "firebase/firestore";
-import GetTags from '../utilities/GetTags';
-import GetPosts from '../utilities/GetPosts';
-import { ImArrowUp } from 'react-icons/im';
 import PostCard from '../components/PostCard';
+import GetTags from '../utilities/GetTags';
 import { Helmet } from "react-helmet";
 
-function PostsPage() {
-    const [, forceUpdate] = useReducer(x => x + 1, 0);
 
+function SinglePostPage() {
 
-    //get tags 
-    const [tags, setTags] = useState([]);
+    const { id } = useParams();
+    const [post, setPost] = useState(null);
 
+    const GetSinglePost = async (postId) => {
+        //get all posts again as a promise
+        const data = getDocs(collection(db, "posts"), where("postId", "==", postId))
+            .then((data) => {
+                data.docs.map((document) => {
+                    //decrement upvotes counts locally
+                    console.log(document.data());
+                    setPost(document.data());
+                })
 
-    //get posts from firebase 
-    const [posts, setPosts] = useState([]);
-
-
+            });
+    }
     useEffect(() => {
-        GetTags(setTags);
-        GetPosts(setPosts);
+        GetSinglePost(id.substring(0, 9))
     }, [])
 
-
-    const [postsWithTags, setPostsWithTags] = useState([]);
-    //merge posts with tags if tag in post  postTag and tag name in tag tagName are the same 
+    //get tags
+    const [tags, setTags] = useState([]);
     useEffect(() => {
-        if (!posts || !tags) return;
-        const postsWithTags = posts.map(post => {
-            const postTag = post.postTag;
-            const tagDetails = tags.find(tag => tag.tagName == postTag);
-            return {
-                ...post,
-                tagDetails
-            }
-        })
-        setPostsWithTags(postsWithTags);
+        GetTags(setTags);
+    }, [])
 
-    }, [posts, tags])
+    //merge post with tag if tag in post  postTag and tag name in tag tagName are the same 
+    const [postWithTag, setPostWithTag] = useState(null);
+    useEffect(() => {
+        if (!post || !tags) return;
+
+        //merge post with relevant tag 
+        const postTag = post.postTag;
+        const tagDetails = tags.find(tag => tag.tagName == postTag);
+        const postWithTag = {
+            ...post,
+            tagDetails
+
+        }
+        setPostWithTag(postWithTag);
+        console.log({ postWithTag });
+    }, [post, tags])
+
+
+
 
     //UPVOTED POSTS 
     const [upvotedPosts, setUpvotedPosts] = useState([]);
@@ -49,7 +62,6 @@ function PostsPage() {
             localStorage.setItem('upvotedPosts', JSON.stringify([]));
         }
     }, [])
-
 
     //UPVOTING 
     function UpvotePost(postId) {
@@ -64,15 +76,9 @@ function PostsPage() {
             UpdateUpvotesInFirebase(postId, -1);
 
 
-            //decrement upvotes counts locally
-            const updatedPosts = postsWithTags.map(post => {
-                if (post.postId === postId) {
-                    post.upvotes = post.upvotes - 1;
-                }
-                return post;
-            }
-            )
-            setPostsWithTags(updatedPosts);
+            //decrement upvotes counts locally ot post state
+            setPost({ ...post, upvotes: post.upvotes - 1 });
+
 
         }
         else {
@@ -82,14 +88,8 @@ function PostsPage() {
             UpdateUpvotesInFirebase(postId, 1);
 
             //increment upvotes counts locally
-            const updatedPosts = postsWithTags.map(post => {
-                if (post.postId === postId) {
-                    post.upvotes = post.upvotes + 1;
-                }
-                return post;
-            }
-            )
-            setPostsWithTags(updatedPosts);
+            setPost({ ...post, upvotes: post.upvotes + 1 });
+
 
         }
     }
@@ -99,7 +99,7 @@ function PostsPage() {
         const data = getDocs(collection(db, "posts"), where("postId", "==", postId))
             .then((data) => {
                 data.docs.map((document) => {
-            //decrement upvotes counts locally
+                    //decrement upvotes counts locally
                     console.log();
 
                     if (postId == document.data().postId) {
@@ -113,30 +113,28 @@ function PostsPage() {
             });
     }
 
-
-
     return (
+
         <div style={{ paddingTop: '50px', paddingBottom: '100px' }}>
-   <Helmet>
+            <Helmet>
                 <meta charSet="utf-8" />
-                <title>99Makers - Posts </title>
-                <link rel="canonical" href={"/posts"} />
+                <title>{id.substring(10,id.length)}</title>
+                <meta name="description" content={postWithTag?.postContent} />
+
+                <link rel="canonical" href={"/"+id} />
             </Helmet>
-            <h1 className='text-2xl w-[90%] max-w-2xl text-left mb-8 ml-6  ' style={{ margin: 'auto' }} >  Posts</h1>
+            <h1 className='text-2xl w-[90%] max-w-2xl text-left mb-8 ml-6  ' style={{ margin: 'auto' }} >  Post</h1>
 
-            {postsWithTags && <div>
-                {postsWithTags.map((post,i) => {
-                    return (
-                        <div key={i} name='Card Container' className=" flex justify-center m-auto my-6 w-11/12 ">
+            {postWithTag && <div>
+                <div name='Card Container' className=" flex justify-center m-auto my-6 w-11/12 ">
+                    <PostCard post={postWithTag} upvotedPosts={upvotedPosts} UpvotePost={UpvotePost} />
+                </div>
 
-                            <PostCard post={post} upvotedPosts={upvotedPosts} UpvotePost={UpvotePost} />
-                        </div>
-                    )
-                })}
             </div>}
 
         </div>
+
     )
 }
 
-export default PostsPage
+export default SinglePostPage

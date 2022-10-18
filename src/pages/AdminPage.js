@@ -22,6 +22,7 @@ import { AiFillTags } from 'react-icons/ai'
 import { LoadingButton } from '@mui/lab'
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
+import { Helmet } from "react-helmet";
 
 
 
@@ -158,6 +159,11 @@ function AdminPage() {
 
     return (
         <div style={{ paddingTop: '50px', paddingBottom: '100px' }} className='animate__animated animate__fadeInDown' >
+             <Helmet>
+                <title>99Makers - Admin </title>
+
+            </Helmet>
+            
             {loading && <div id='alertMessage' style={{height:'100%'}} className=' fade-in w-full h-screen fixed backdrop-blur-xl bg-black/50 z-50 -mt-12  ' >
                 <div class="lds-dual-ring" style={{ position: 'sticky', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', opacity: '0.7' }} ></div>
             </div>}
