@@ -157,7 +157,7 @@ function Random10CharsCode(){
 
                                     {tags.map((tag, i) => {
                                         return (
-                                            <div className='flex hover:bg-gray-100 hover:text-gray-900 w-4/5 m-auto' style={{ cursor: 'pointer' }} onClick={() => { setPostTag(tag); setShowTagsMenu(false) }} >
+                                            <div className='flex hover:bg-gray-100 hover:text-gray-900 w-4/5 m-auto' style={{ cursor: 'pointer' }} onClick={() => { setPostTag(tag.TagName); setShowTagsMenu(false) }} >
                                                 <button
                                                     class="text-white block px-4 py-1 my-2 text-sm  w-full text-left rounded-3xl" style={{ backgroundColor: (tag.tagColor), width: 'fit-content', minWidth: '80px', minHeight: '28px' }} role="menuitem" tabindex="-1" id="menu-item-0"
                                                 >
