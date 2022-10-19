@@ -26,7 +26,8 @@ function Random10CharsCode(){
     const [postTitle, setPostTitle] = useState('');
     const [postContent, setPostContent] = useState('');
     const [postTag, setPostTag] = useState(null);
-
+console.log({postTag})
+console.log({tags})
     //add post to firebase 
     const postsCollectionRef = collection(db, "posts");
     const CreatePost = async () => {
@@ -34,7 +35,7 @@ function Random10CharsCode(){
         await addDoc(postsCollectionRef, {
             postTitle: postTitle,
             postContent: postContent,
-            postTag: postTag,
+            postTag: postTag.tagName,
             postDate: serverTimestamp(),
             upvotes: 0,
             postId : Random10CharsCode()
@@ -48,12 +49,12 @@ function Random10CharsCode(){
     };
 
     const [showTagsMenu, setShowTagsMenu] = useState(false);
-    useEffect(() => {
+  /*  useEffect(() => {
         if (showTagsMenu) {
             //add 'transform opacity-100 scale-100' to element with id tagsMenu 
             document.getElementById('tagsMenu').classList.add('transform', 'opacity-100', 'scale-100');
             document.getElementById('tagsMenu').classList.remove('pointer-events-none');
-
+            console.log('showTagsMenu : true, increase opacity and scale');
         }
         if (!showTagsMenu) {
             document.getElementById('tagsMenu').classList.remove('transform', 'opacity-100', 'scale-100');
@@ -61,7 +62,7 @@ function Random10CharsCode(){
 
 
         }
-    }, [showTagsMenu])
+    }, [showTagsMenu])*/
 
     //loading 
     const [loading, setLoading] = useState(false);
@@ -95,11 +96,11 @@ function Random10CharsCode(){
             }, 2500)
     
         }, [openAlert])
-
+console.log({showTagsMenu})
         
 
     return (
-        <div style={{ paddingTop: '50px', paddingBottom: '200px' }} className='animate__animated animate__fadeInDown'>
+        <div style={{ paddingTop: '50px', paddingBottom: '200px' }} >
             <Helmet>
                 <meta charSet="utf-8" />
                 <title>99Makers - Create Post </title>
@@ -156,13 +157,13 @@ function Random10CharsCode(){
                                 </button>
                             </div>
 
-                            <div id="tagsMenu" class="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none transition ease-out duration-100" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+                            {showTagsMenu && <div  class="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none transition ease-out duration-100" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
                                 <div class="py-1" role="none">
                                     {/* <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" --> */}
 
                                     {tags.map((tag, i) => {
                                         return (
-                                            <div className='flex hover:bg-gray-100 hover:text-gray-900 w-4/5 m-auto' style={{ cursor: 'pointer' }} onClick={() => { setPostTag(tag.TagName); setShowTagsMenu(false) }} >
+                                            <div className='flex hover:bg-gray-100 hover:text-gray-900 w-4/5 m-auto' style={{ cursor: 'pointer' }} onClick={() => {setPostTag(tag); setShowTagsMenu(false) }} >
                                                 <button
                                                     class="text-white block px-4 py-1 my-2 text-sm  w-full text-left rounded-3xl" style={{ backgroundColor: (tag.tagColor), width: 'fit-content', minWidth: '80px', minHeight: '28px' }} role="menuitem" tabindex="-1" id="menu-item-0"
                                                 >
@@ -178,7 +179,7 @@ function Random10CharsCode(){
 
 
                                 </div>
-                            </div>
+                            </div>}
                         </div>
                     </ClickAwayListener>
 
@@ -201,7 +202,7 @@ function Random10CharsCode(){
                             data-mdb-ripple="true"
                             data-mdb-ripple-color="light"
 
-                            className="inline-block px-6 py-2.5 bg-green-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-green-700 hover:shadow-lg focus:bg-green-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-800 active:shadow-lg transition duration-150 ease-in-out animate__animated animate__fadeInDown animate__delay-1s"
+                            className="inline-block px-6 py-2.5 bg-green-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-green-700 hover:shadow-lg focus:bg-green-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-800 active:shadow-lg transition duration-150 ease-in-out "
                         >Create Post</button>
                     </div>
 

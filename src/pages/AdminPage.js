@@ -158,7 +158,7 @@ function AdminPage() {
     const [formError, setFormError] = useState('');
 
     return (
-        <div style={{ paddingTop: '50px', paddingBottom: '100px' }} className='animate__animated animate__fadeInDown' >
+        <div style={{ paddingTop: '50px', paddingBottom: '100px' }}  >
              <Helmet>
                 <title>99Makers - Admin </title>
 
@@ -222,7 +222,7 @@ function AdminPage() {
                 style={{ marginTop: '66px', marginBottom:'200px' }}
                 onClick={() => { uploadFile() }}
 
-                class="inline-block px-7 py-3 bg-green-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-green-700 hover:shadow-lg  focus:shadow-lg focus:outline-none focus:ring-0  focus:shadow-lg transition duration-150 ease-in-out animate__animated animate__fadeInDown animate__delay-1s">
+                class="inline-block px-7 py-3 bg-green-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-green-700 hover:shadow-lg  focus:shadow-lg focus:outline-none focus:ring-0  focus:shadow-lg transition duration-150 ease-in-out ">
                 Create Tag
             </button>
 
@@ -269,7 +269,7 @@ function AdminPage() {
 
 
 
-             {tags && <div>
+             {/* {tags && <div>
                 {tags.map((tag, i) => {
                     return (
                         <div key={i}>
@@ -295,11 +295,11 @@ function AdminPage() {
                         </div>
                     )
                 })}
-            </div>} 
+            </div>}  */}
 
 
 
-            <div class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
+            {/* <div class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto"
                 id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog relative w-auto pointer-events-none">
                     <div
@@ -343,7 +343,7 @@ function AdminPage() {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
         </div>
 
     )

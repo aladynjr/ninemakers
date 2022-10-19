@@ -34,12 +34,13 @@ function MiniPostsPage() {
                 tagDetails
             }
         })
+        postsWithTags.sort((a, b) => b.upvotes - a.upvotes);
+
         setPostsWithTags(postsWithTags);
 
     }, [posts, tags])
 
     //upvoting 
-    const [postUpvotes, setPostUpvotes] = useState(0);
     const [upvotedPosts, setUpvotedPosts] = useState([]);
     useEffect(() => {
         setUpvotedPosts(JSON.parse(localStorage.getItem('upvotedPosts')) || []);

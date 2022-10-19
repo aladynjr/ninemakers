@@ -13,19 +13,19 @@ function SinglePostPage() {
     const [post, setPost] = useState(null);
 
     const GetSinglePost = async (postId) => {
-        //get all posts again as a promise
-        const data = getDocs(collection(db, "posts"), where("postId", "==", postId))
-            .then((data) => {
-                data.docs.map((document) => {
-                    //decrement upvotes counts locally
-                    console.log(document.data());
-                    setPost(document.data());
-                })
-
-            });
+        console.log('post id that we need  : ' + postId )
+        //get a post with the field postId equal to postID prop again as a promise from firebase 
+        const q = query(collection(db, "posts"), where("postId", "==", postId));
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+            // doc.data() is never undefined for query doc snapshots
+            console.log(doc.id, " => ", doc.data());
+            setPost(doc.data());
+        }
+        );
     }
     useEffect(() => {
-        GetSinglePost(id.substring(0, 9))
+        GetSinglePost(id.substring(0, 10))
     }, [])
 
     //get tags
@@ -48,7 +48,6 @@ function SinglePostPage() {
 
         }
         setPostWithTag(postWithTag);
-        console.log({ postWithTag });
     }, [post, tags])
 
 
@@ -62,10 +61,9 @@ function SinglePostPage() {
             localStorage.setItem('upvotedPosts', JSON.stringify([]));
         }
     }, [])
-
     //UPVOTING 
     function UpvotePost(postId) {
-        console.log({ postId });
+
         //if post is already upvoted remove it from upvoted posts state then update local storage, if its not add it to state and local storage 
         if (upvotedPosts.includes(postId)) {
 
@@ -100,7 +98,6 @@ function SinglePostPage() {
             .then((data) => {
                 data.docs.map((document) => {
                     //decrement upvotes counts locally
-                    console.log();
 
                     if (postId == document.data().postId) {
                         updateDoc(doc(db, "posts", document.id), {
@@ -118,16 +115,25 @@ function SinglePostPage() {
         <div style={{ paddingTop: '50px', paddingBottom: '100px' }}>
             <Helmet>
                 <meta charSet="utf-8" />
-                <title>{id.substring(10,id.length)}</title>
+                <title>{id.substring(10, id.length)}</title>
                 <meta name="description" content={postWithTag?.postContent} />
 
-                <link rel="canonical" href={"/"+id} />
+                <link rel="canonical" href={"/" + id} />
             </Helmet>
-            <h1 className='text-2xl w-[90%] max-w-2xl text-left mb-8 ml-6  ' style={{ margin: 'auto' }} >  Post</h1>
+
+
+            <h1 className='text-2xl w-[90%] max-w-2xl text-left mb-8 ml-6  ' style={{ margin: 'auto' }} >
+                <h1 name='post title' >
+                    {postWithTag?.postTitle}
+                    <span name='post tag' className='w-[90%] max-w-sm text-white text-xs rounded-3xl py-0.5 px-3 ml-2 font-normal '
+                        style={{ backgroundColor: postWithTag?.tagDetails?.tagColor, width: 'fit-content', minWidth: '80px', height: 'fit-content', marginTop: '-0.7px' }} >
+                        {postWithTag?.tagDetails?.tagName}
+                    </span>
+                </h1></h1>
 
             {postWithTag && <div>
                 <div name='Card Container' className=" flex justify-center m-auto my-6 w-11/12 ">
-                    <PostCard post={postWithTag} upvotedPosts={upvotedPosts} UpvotePost={UpvotePost} />
+                    <PostCard post={postWithTag} upvotedPosts={upvotedPosts} UpvotePost={UpvotePost} showTitle={false} />
                 </div>
 
             </div>}

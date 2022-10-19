@@ -37,6 +37,9 @@ function PostsPage() {
                 tagDetails
             }
         })
+        //sort postsWithTags by upvotes from top to low 
+        postsWithTags.sort((a, b) => b.upvotes - a.upvotes);
+        
         setPostsWithTags(postsWithTags);
 
     }, [posts, tags])
