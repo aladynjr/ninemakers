@@ -122,10 +122,10 @@ function PostsPage() {
         <div style={{ paddingTop: '50px', paddingBottom: '100px' }}>
    <Helmet>
                 <meta charSet="utf-8" />
-                <title>99Makers - Posts </title>
+                <title>99Makers - Topics </title>
                 <link rel="canonical" href={"/posts"} />
             </Helmet>
-            <h1 className='text-2xl w-[90%] max-w-2xl text-left mb-8 ml-6  ' style={{ margin: 'auto' }} >  Posts</h1>
+            <h1 className='text-2xl w-[90%] max-w-2xl text-left mb-8 ml-6  ' style={{ margin: 'auto' }} >  Topics</h1>
 
             {postsWithTags && <div>
                 {postsWithTags.map((post,i) => {
