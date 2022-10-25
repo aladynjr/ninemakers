@@ -13,7 +13,7 @@ function PostCard({ post, upvotedPosts, UpvotePost, showTitle = true }) {
                 <div className="div-block white-box w-inline-block snipcss-9bMbz "
                     style={{ width: '100%', maxWidth: '800px', margin: 'auto' }}
                   >
-                    <div class="postVotes snipcss-i2sDb hover:bg-neutral-100 "  >
+                    <div class="postVotes snipcss-i2sDb hover:bg-neutral-100 " style={{marginRight:'0'}}  >
                         <div className=' px-4   cursor-pointer  '
 
                             onClick={() => { UpvotePost(post.postId); }}>
@@ -25,9 +25,9 @@ function PostCard({ post, upvotedPosts, UpvotePost, showTitle = true }) {
                             </span>
                         </div>
                     </div>
-                    <div>
-                        <img src={post?.tagDetails?.tagUrl} loading="lazy" width="50" alt="" />
-                    </div>
+                    {/* <div>
+                        <img src={post?.tagDetails?.tagUrl} style={{height:'50px', width:'50px', objectFit:'cover'}} loading="lazy" width="50" alt="" />
+                    </div> */}
 
                     <div class="div-block-2">
                         <h5 class="heading-2">

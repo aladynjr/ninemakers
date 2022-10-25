@@ -8,12 +8,12 @@ function CommentCard({ comment, UpvoteComment, upvotedComments }) {
 
 
 
-            <div className='WebflowCardDesign' style={{marginBlock:'15px'}} >
+            <div className='WebflowCardDesign' style={{marginBlock:'0px'}} >
 
                 <Link className="div-block white-box w-inline-block snipcss-9bMbz "
                     style={{ width: '100%', maxWidth: '800px', margin: 'auto' }}
                >
-                    <div style={{marginTop:'17px'}} class="postVotes snipcss-i2sDb hover:bg-neutral-100 "  >
+                    <div /*style={{marginTop:'17px'}}*/ class="postVotes snipcss-i2sDb hover:bg-neutral-100 " style={{marginRight:'0'}}  >
                         <div className=' px-4   cursor-pointer  '
 
                             onClick={() => { UpvoteComment(comment.commentId); }}>
@@ -36,16 +36,16 @@ function CommentCard({ comment, UpvoteComment, upvotedComments }) {
                                 {comment?.tagDetails?.tagName}
                             </span>
                         </h5>
-                        <div class="text-block HideOnMobile " style={{ maxWidth: '500px', marginTop:'5px' }} >
+                        <div class="text-block  " style={{ maxWidth: '500px', marginTop:'5px' }} >
                             {comment.commentContent}
                         </div>
                     </div>
 
 
                 </Link>
-                <div class="text-block HideOnDesktop" style={{ width: '90%', textAlign: 'left', margin: 'auto',marginTop:'-15px' }}>
+                {/* <div class="text-block HideOnDesktop" style={{ width: '90%', textAlign: 'left', margin: 'auto',marginTop:'-15px' }}>
                     {comment.commentContent}
-                </div>
+                </div> */}
             </div>
 
         </div>

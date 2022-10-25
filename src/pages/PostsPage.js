@@ -118,13 +118,16 @@ function PostsPage() {
 
 
 
+
     return (
         <div style={{ paddingTop: '50px', paddingBottom: '100px' }}>
-   <Helmet>
+    <Helmet>
                 <meta charSet="utf-8" />
-                <title>99Makers - Topics </title>
+                <title>99Makers - Learn how people are starting successful businesses</title>
+                <meta name="description" content="99Makers Bite-sized learning app that gives you key ideas and insights from the world's best entrepreneurs.    " />
+
                 <link rel="canonical" href={"/posts"} />
-            </Helmet>
+            </Helmet> 
             <h1 className='text-2xl w-[90%] max-w-2xl text-left mb-8 ml-6  ' style={{ margin: 'auto' }} >  Topics</h1>
 
             {postsWithTags && <div>

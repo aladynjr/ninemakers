@@ -169,6 +169,7 @@ function SinglePostPage() {
     //add post to firebase 
     const postsCollectionRef = collection(db, "comments");
     const CreateComment = async () => {
+        var rand = Random10CharsCode();
         setLoading(true);
         await addDoc(postsCollectionRef, {
             commentTitle: commentTitle,
@@ -177,11 +178,20 @@ function SinglePostPage() {
             postId: postWithTag?.postId,
             commentDate: serverTimestamp(),
             upvotes: 0,
-            commentId: Random10CharsCode()
+            commentId: rand
         });
+        //get created comment 
+        const q = query(collection(db, "comments"), where("commentId", "==", rand));
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+            // doc.data() is never undefined for query doc snapshots
+            setComments(comments => [...comments, doc.data()]);
+        }
+        );
+
         console.log('DB : post added');
         setLoading(false);
-        setAlertMessage('Comment added successfully');
+        setAlertMessage('Success !');
         setAlertSeverity('success');
         setOpenAlert(true);
 
@@ -303,18 +313,19 @@ function SinglePostPage() {
             <Helmet>
                 <meta charSet="utf-8" />
                 <title>{id.substring(10, id.length)}</title>
+
                 <meta name="description" content={postWithTag?.postContent} />
 
                 <link rel="canonical" href={"/" + id} />
             </Helmet>
 
-            {(loading) && <div id='alertMessage' style={{ height: '100%' }} className=' fade-in w-full h-screen fixed backdrop-blur-xl bg-black/50 z-50 -mt-12  ' >
+            {(loading) && <div id='alertMessage' style={{ height: '150%', marginTop: '-120px' }} className=' fade-in w-full h-screen fixed backdrop-blur-xl bg-black/50 z-50 -mt-30  ' >
                 <div className="lds-dual-ring" style={{ position: 'sticky', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', opacity: '0.7' }} ></div>
             </div>}
 
             <h1 className='text-2xl  w-[90%] max-w-2xl text-left mb-8 ml-6  ' style={{ margin: 'auto' }} >
                 <h1 name='post title' >
-                  <div className='font-semibold' >  {postWithTag?.postTitle}</div>
+                    <div className='font-semibold' >  {postWithTag?.postTitle}</div>
                     <span name='post tag' className='w-[90%] max-w-sm text-white text-xs rounded-3xl py-0.5 px-3 ml-2 font-normal '
                         style={{ backgroundColor: postWithTag?.tagDetails?.tagColor, width: 'fit-content', minWidth: '80px', height: 'fit-content', marginTop: '-0.7px' }} >
                         {postWithTag?.tagDetails?.tagName}
@@ -333,20 +344,20 @@ function SinglePostPage() {
                 </div>
 
             </div>} */}
-    <div style={{marginTop:'50px', marginBottom:'10px'}} >
-            {commentsWithTags && commentsWithTags.map((comment) => {
-                return (
+            <div style={{ marginTop: '50px', marginBottom: '10px' }} >
+                {commentsWithTags && commentsWithTags.map((comment) => {
+                    return (
 
-                    <CommentCard comment={comment} upvotedComments={upvotedComments} UpvoteComment={UpvoteComment} />
+                        <CommentCard comment={comment} upvotedComments={upvotedComments} UpvoteComment={UpvoteComment} />
 
-                )
-            })}
-</div>
+                    )
+                })}
+            </div>
             <div className="flex justify-center flex-col  " style={{ maxWidth: '600px', margin: 'auto', width: '90%' }}  >
 
                 <div className="mb-3 w-11/12" style={{ margin: '20px auto' }}>
                     <label htmlFor="exampleFormControlInput1" className="form-label text-sm  inline-block mb-2 text-gray-700 w-full text-left"
-                    >Comment Title</label>
+                    > Title</label>
                     <input
                         value={commentTitle}
                         onChange={(e) => setCommentTitle(e.target.value)}
@@ -359,14 +370,14 @@ function SinglePostPage() {
 
                 <div className="mb-3 w-11/12" style={{ margin: '30px auto', marginTop: '0' }}  >
                     <label htmlFor="exampleFormControlTextarea1" className="form-label text-sm  inline-block mb-2 text-gray-700 w-full text-left "
-                    >Comment Content</label>
+                    > Content</label>
                     <textarea
                         value={commentContent}
                         onChange={(e) => setCommentContent(e.target.value)}
                         className="  form-control  block   w-full   px-3   py-3 text-sm   font-normal   text-gray-700   bg-white bg-clip-padding    border border-solid border-gray-300   rounded   transition   ease-in-out   m-0   focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none   "
                         id="exampleFormControlTextarea1"
                         rows="3"
-                        placeholder="Your Comment Content"
+                        placeholder="Your Content"
                     ></textarea>
                 </div>
 
@@ -390,7 +401,7 @@ function SinglePostPage() {
                         data-mdb-ripple-color="light"
 
                         className="inline-block px-6 py-2.5 bg-green-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-green-700 hover:shadow-lg focus:bg-green-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-800 active:shadow-lg transition duration-150 ease-in-out "
-                    >Create Comment</button>
+                    >Create</button>
                 </div>
 
             </div>

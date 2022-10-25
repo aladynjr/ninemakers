@@ -106,7 +106,7 @@ console.log({showTagsMenu})
                 <title>99Makers - Create Post </title>
                 <link rel="canonical" href={"/create"} />
             </Helmet>
-            {(loading) && <div id='alertMessage' style={{height:'100%'}} className=' fade-in w-full h-screen fixed backdrop-blur-xl bg-black/50 z-50 -mt-12  ' >
+            {(loading) && <div id='alertMessage' style={{ height: '150%', marginTop:'-120px' }} className=' fade-in w-full h-screen fixed backdrop-blur-xl bg-black/50 z-50 -mt-12  ' >
                 <div class="lds-dual-ring" style={{ position: 'sticky', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', opacity: '0.7' }} ></div>
             </div>}
 
